@@ -1,5 +1,5 @@
 {
-	"name": "ytmusic-api",
+	"name": "@hiizun/ytmusic-api",
 	"version": "5.3.0",
 	"description": "YouTube Music API",
 	"main": "./dist/index.js",
@@ -9,7 +9,10 @@
 	"license": "GPL-3.0",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/zS1L3NT/ts-npm-ytmusic-api"
+		"url": "https://github.com/HiiZun/ts-npm-ytmusic-api"
+	},
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com"
 	},
 	"files": [
 		"dist",
@@ -24,7 +27,11 @@
 	},
 	"scripts": {
 		"build": "tsup src/index.ts",
-		"lint": "tsc --noEmit ; bunx @biomejs/biome check --write"
+		"lint": "tsc --noEmit && bunx @biomejs/biome check --write",
+		"lint:check": "tsc --noEmit && bunx @biomejs/biome check",
+		"test": "bun test",
+		"prepublishOnly": "npm run build",
+		"clean": "rimraf dist"
 	},
 	"dependencies": {
 		"@biomejs/biome": "1.8.3",

@@ -1,8 +1,8 @@
 # YTMusic API
 
-![License](https://img.shields.io/github/license/zS1L3NT/ts-npm-ytmusic-api?style=for-the-badge) ![Languages](https://img.shields.io/github/languages/count/zS1L3NT/ts-npm-ytmusic-api?style=for-the-badge) ![Top Language](https://img.shields.io/github/languages/top/zS1L3NT/ts-npm-ytmusic-api?style=for-the-badge) ![Commit Activity](https://img.shields.io/github/commit-activity/y/zS1L3NT/ts-npm-ytmusic-api?style=for-the-badge) ![Last commit](https://img.shields.io/github/last-commit/zS1L3NT/ts-npm-ytmusic-api?style=for-the-badge)
+![License](https://img.shields.io/github/license/HiiZun/ts-npm-ytmusic-api?style=for-the-badge) ![Languages](https://img.shields.io/github/languages/count/HiiZun/ts-npm-ytmusic-api?style=for-the-badge) ![Top Language](https://img.shields.io/github/languages/top/HiiZun/ts-npm-ytmusic-api?style=for-the-badge) ![Commit Activity](https://img.shields.io/github/commit-activity/y/HiiZun/ts-npm-ytmusic-api?style=for-the-badge) ![Last commit](https://img.shields.io/github/last-commit/HiiZun/ts-npm-ytmusic-api?style=for-the-badge)
 
-YouTube Music API (Unofficial) is a YouTube Music data scraper. It comes with TypeScript support API for return types. The NPM package can be found [here](https://npmjs.com/package/ytmusic-api)
+YouTube Music API (Unofficial) is a YouTube Music data scraper. It comes with TypeScript support API for return types. The package is published to [GitHub Packages](https://github.com/HiiZun/ts-npm-ytmusic-api/packages).
 
 ## Motivation
 
@@ -23,13 +23,43 @@ Because of this, I decided to build my own version of a youtube music api with T
     -   Lyrics
     -   Upcoming Songs
 
+## Installation
+
+### From GitHub Packages
+
+First, create or edit your `.npmrc` file in your project root:
+
+```
+@hiizun:registry=https://npm.pkg.github.com
+```
+
+Then install the package:
+
+```bash
+npm install @hiizun/ytmusic-api
+```
+
+### Authentication for GitHub Packages
+
+To install packages from GitHub Packages, you need to authenticate. Create a personal access token with `read:packages` scope and add it to your `.npmrc`:
+
+```
+//npm.pkg.github.com/:_authToken=YOUR_PERSONAL_ACCESS_TOKEN
+@hiizun:registry=https://npm.pkg.github.com
+```
+
+Or authenticate via npm login:
+
+```bash
+npm login --scope=@hiizun --registry=https://npm.pkg.github.com
+```
 
 ## Usage
 
 ### Basic Usage
 
 ```js
-import YTMusic from "ytmusic-api"
+import YTMusic from "@hiizun/ytmusic-api"
 
 const ytmusic = new YTMusic()
 await ytmusic.initialize(/* Optional: Custom cookies */)
@@ -42,7 +72,7 @@ ytmusic.search("Never gonna give you up").then(songs => {
 ### Using with HTTP Proxy
 
 ```js
-import YTMusic from "ytmusic-api"
+import YTMusic from "@hiizun/ytmusic-api"
 
 // Option 1: Pass proxy config in constructor
 const ytmusic = new YTMusic({
