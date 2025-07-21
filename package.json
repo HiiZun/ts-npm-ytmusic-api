@@ -27,14 +27,15 @@
 	},
 	"scripts": {
 		"build": "tsup src/index.ts",
-		"lint": "tsc --noEmit && bunx @biomejs/biome check --write",
-		"lint:check": "tsc --noEmit && bunx @biomejs/biome check",
+		"lint": "tsc --noEmit && npx @biomejs/biome check --write",
+		"lint:check": "tsc --noEmit && npx @biomejs/biome check",
+		"lint:eslint": "eslint src --ext .ts --fix",
+		"format": "prettier --write src/**/*.ts",
 		"test": "bun test || echo 'No tests specified'",
 		"prepublishOnly": "npm run build",
 		"clean": "rimraf dist"
 	},
 	"dependencies": {
-		"@biomejs/biome": "1.8.3",
 		"axios": "^1.7.2",
 		"https-proxy-agent": "^7.0.6",
 		"socks-proxy-agent": "^8.0.5",
@@ -42,6 +43,7 @@
 		"zod": "^3.23.8"
 	},
 	"devDependencies": {
+		"@biomejs/biome": "1.8.3",
 		"@types/node": "^24.0.15",
 		"@types/tough-cookie": "^4.0.5",
 		"bun-types": "^1.1.18",
