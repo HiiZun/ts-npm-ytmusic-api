@@ -184,3 +184,28 @@ export const HomeSection = z
 		contents: z.array(z.union([AlbumDetailed, PlaylistDetailed, SongDetailed])),
 	})
 	.strict()
+
+export type ProxyConfig = z.infer<typeof ProxyConfig>
+export const ProxyConfig = z
+	.object({
+		protocol: z.enum(["http", "https", "socks4", "socks5"]).optional(),
+		host: z.string(),
+		port: z.number(),
+		auth: z
+			.object({
+				username: z.string(),
+				password: z.string(),
+			})
+			.optional(),
+	})
+	.strict()
+
+export type YTMusicOptions = z.infer<typeof YTMusicOptions>
+export const YTMusicOptions = z
+	.object({
+		cookies: z.string().optional(),
+		GL: z.string().optional(),
+		HL: z.string().optional(),
+		proxy: ProxyConfig.optional(),
+	})
+	.strict()

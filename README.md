@@ -26,6 +26,8 @@ Because of this, I decided to build my own version of a youtube music api with T
 
 ## Usage
 
+### Basic Usage
+
 ```js
 import YTMusic from "ytmusic-api"
 
@@ -36,6 +38,48 @@ ytmusic.search("Never gonna give you up").then(songs => {
 	console.log(songs)
 })
 ```
+
+### Using with HTTP Proxy
+
+```js
+import YTMusic from "ytmusic-api"
+
+// Option 1: Pass proxy config in constructor
+const ytmusic = new YTMusic({
+	protocol: "http", // or "https", "socks4", "socks5"
+	host: "proxy.example.com",
+	port: 8080,
+	auth: { // Optional authentication
+		username: "your_username",
+		password: "your_password"
+	}
+})
+
+await ytmusic.initialize()
+
+// Option 2: Pass proxy config in initialize method
+const ytmusic2 = new YTMusic()
+await ytmusic2.initialize({
+	proxy: {
+		protocol: "http",
+		host: "proxy.example.com", 
+		port: 8080
+	}
+})
+
+ytmusic.search("Never gonna give you up").then(songs => {
+	console.log(songs)
+})
+```
+
+### Proxy Configuration
+
+The proxy configuration supports:
+
+- **HTTP/HTTPS proxies**: Use `protocol: "http"` or `protocol: "https"`
+- **SOCKS proxies**: Use `protocol: "socks4"` or `protocol: "socks5"`
+- **Authentication**: Optional `auth` object with `username` and `password`
+- **Flexible setup**: Configure proxy in constructor or initialize method
 
 ## Credits
 

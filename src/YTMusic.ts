@@ -1,5 +1,7 @@
 import axios, { AxiosInstance } from "axios"
 import { Cookie, CookieJar } from "tough-cookie"
+import { HttpsProxyAgent } from "https-proxy-agent"
+import { SocksProxyAgent } from "socks-proxy-agent"
 
 import { FE_MUSIC_HOME } from "./constants"
 import AlbumParser from "./parsers/AlbumParser"
@@ -17,12 +19,14 @@ import {
 	HomeSection,
 	PlaylistDetailed,
 	PlaylistFull,
+	ProxyConfig,
 	SearchResult,
 	SongDetailed,
 	SongFull,
 	UpNextsDetails,
 	VideoDetailed,
 	VideoFull,
+	YTMusicOptions,
 } from "./types"
 import { traverse, traverseList, traverseString } from "./utils/traverse"
 
@@ -32,15 +36,19 @@ export default class YTMusic {
 	private cookiejar: CookieJar
 	private config?: Record<string, string>
 	private client: AxiosInstance
+	private proxyConfig?: ProxyConfig | undefined
 
 	/**
 	 * Creates an instance of YTMusic
 	 * Make sure to call initialize()
+	 * @param proxyConfig - Optional proxy configuration
 	 */
-	public constructor() {
+	public constructor(proxyConfig?: ProxyConfig | undefined) {
 		this.cookiejar = new CookieJar()
 		this.config = {}
-		this.client = axios.create({
+		this.proxyConfig = proxyConfig
+
+		const axiosConfig: any = {
 			baseURL: "https://music.youtube.com/",
 			headers: {
 				"User-Agent":
@@ -48,7 +56,29 @@ export default class YTMusic {
 				"Accept-Language": "en-US,en;q=0.5",
 			},
 			withCredentials: true,
-		})
+		}
+
+		// Configure proxy if provided
+		if (this.proxyConfig) {
+			const { protocol = "http", host, port, auth } = this.proxyConfig
+			let proxyUrl = `${protocol}://`
+			
+			if (auth) {
+				proxyUrl += `${auth.username}:${auth.password}@`
+			}
+			
+			proxyUrl += `${host}:${port}`
+
+			if (protocol === "socks4" || protocol === "socks5") {
+				axiosConfig.httpsAgent = new SocksProxyAgent(proxyUrl)
+				axiosConfig.httpAgent = new SocksProxyAgent(proxyUrl)
+			} else {
+				axiosConfig.httpsAgent = new HttpsProxyAgent(proxyUrl)
+				axiosConfig.httpAgent = new HttpsProxyAgent(proxyUrl)
+			}
+		}
+
+		this.client = axios.create(axiosConfig)
 
 		this.client.interceptors.request.use(req => {
 			if (req.baseURL) {
@@ -79,12 +109,68 @@ export default class YTMusic {
 	/**
 	 * Initializes the API
 	 */
-	public async initialize(options?: {
-		cookies?: string
-		GL?: string
-		HL?: string
-	}) {
-		const { cookies, GL, HL } = options ?? {}
+	public async initialize(options?: YTMusicOptions) {
+		const { cookies, GL, HL, proxy } = options ?? {}
+
+		// Update proxy configuration if provided in initialize
+		if (proxy && !this.proxyConfig) {
+			this.proxyConfig = proxy
+			// Recreate client with proxy configuration
+			const axiosConfig: any = {
+				baseURL: "https://music.youtube.com/",
+				headers: {
+					"User-Agent":
+						"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36",
+					"Accept-Language": "en-US,en;q=0.5",
+				},
+				withCredentials: true,
+			}
+
+			const { protocol = "http", host, port, auth } = proxy
+			let proxyUrl = `${protocol}://`
+			
+			if (auth) {
+				proxyUrl += `${auth.username}:${auth.password}@`
+			}
+			
+			proxyUrl += `${host}:${port}`
+
+			if (protocol === "socks4" || protocol === "socks5") {
+				axiosConfig.httpsAgent = new SocksProxyAgent(proxyUrl)
+				axiosConfig.httpAgent = new SocksProxyAgent(proxyUrl)
+			} else {
+				axiosConfig.httpsAgent = new HttpsProxyAgent(proxyUrl)
+				axiosConfig.httpAgent = new HttpsProxyAgent(proxyUrl)
+			}
+
+			this.client = axios.create(axiosConfig)
+
+			// Re-add interceptors
+			this.client.interceptors.request.use(req => {
+				if (req.baseURL) {
+					const cookieString = this.cookiejar.getCookieStringSync(req.baseURL)
+					if (cookieString) {
+						req.headers["cookie"] = cookieString
+					}
+				}
+
+				return req
+			})
+
+			this.client.interceptors.response.use(res => {
+				if (res.headers && res.config.baseURL) {
+					const cookieStrings = res.headers["set-cookie"] || []
+					for (const cookieString of cookieStrings) {
+						const cookie = Cookie.parse(cookieString)
+						if (cookie) {
+							this.cookiejar.setCookieSync(cookie, res.config.baseURL)
+						}
+					}
+				}
+
+				return res
+			})
+		}
 
 		if (cookies) {
 			for (const cookieString of cookies.split("; ")) {
