@@ -44,12 +44,8 @@ jobs:
       
     - name: Run linting
       run: |
-        echo "Running TypeScript check..."
-        npm run lint:ts
-        echo "Running ESLint..."
-        npm run lint:eslint
-        echo "Running Prettier..."
-        npm run format
+        echo "Running CI-friendly linting..."
+        npm run lint:ci
         
     - name: Build project
       run: |

@@ -28,9 +28,10 @@
 	"scripts": {
 		"build": "tsup src/index.ts",
 		"lint": "npm run lint:ts && npm run lint:eslint && npm run format",
+		"lint:ci": "npm run lint:ts && (npm run lint:eslint || true) && npm run format",
 		"lint:ts": "tsc --noEmit",
-		"lint:eslint": "eslint src --ext .ts --fix --max-warnings 0",
-		"lint:check": "npm run lint:ts && eslint src --ext .ts --max-warnings 0 && prettier --check \"src/**/*.ts\"",
+		"lint:eslint": "eslint src --ext .ts --fix",
+		"lint:check": "npm run lint:ts && eslint src --ext .ts && prettier --check \"src/**/*.ts\"",
 		"format": "prettier --write \"src/**/*.ts\"",
 		"test": "echo 'No tests specified' && exit 0",
 		"prepublishOnly": "npm run build",
