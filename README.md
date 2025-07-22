@@ -36,22 +36,7 @@ First, create or edit your `.npmrc` file in your project root:
 Then install the package:
 
 ```bash
-npm install @hiizun/ytmusic-api
-```
-
-### Authentication for GitHub Packages
-
-To install packages from GitHub Packages, you need to authenticate. Create a personal access token with `read:packages` scope and add it to your `.npmrc`:
-
-```
-//npm.pkg.github.com/:_authToken=YOUR_PERSONAL_ACCESS_TOKEN
-@hiizun:registry=https://npm.pkg.github.com
-```
-
-Or authenticate via npm login:
-
-```bash
-npm login --scope=@hiizun --registry=https://npm.pkg.github.com
+npm install ytmusic-api
 ```
 
 ## Usage
@@ -59,7 +44,7 @@ npm login --scope=@hiizun --registry=https://npm.pkg.github.com
 ### Basic Usage
 
 ```js
-import YTMusic from "@hiizun/ytmusic-api"
+import YTMusic from "ytmusic-api"
 
 const ytmusic = new YTMusic()
 await ytmusic.initialize(/* Optional: Custom cookies */)
@@ -72,7 +57,7 @@ ytmusic.search("Never gonna give you up").then(songs => {
 ### Using with HTTP Proxy
 
 ```js
-import YTMusic from "@hiizun/ytmusic-api"
+import YTMusic from "ytmusic-api"
 
 // Option 1: Pass proxy config in constructor
 const ytmusic = new YTMusic({
