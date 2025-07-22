@@ -496,8 +496,8 @@ export default class YTMusic {
 			? lyrics
 					.replaceAll("\r", "")
 					.split("\n")
-					.filter(v => !!v)
-			: null
+					.filter((v: string) => !!v)
+			: null;
 	}
 
 	/**

@@ -21,16 +21,16 @@ export default class Parser {
 	public static parseNumber(string: string): number {
 		if (string.at(-1)!.match(/^[A-Z]+$/)) {
 			const number = +string.slice(0, -1)
-			const multiplier = string.at(-1)
+			const multiplier = string.at(-1) as string
 
-			return (
-				{
-					K: number * 1000,
-					M: number * 1000 * 1000,
-					B: number * 1000 * 1000 * 1000,
-					T: number * 1000 * 1000 * 1000 * 1000,
-				}[multiplier!] || NaN
-			)
+			const multipliers: { [key: string]: number } = {
+				K: number * 1000,
+				M: number * 1000 * 1000,
+				B: number * 1000 * 1000 * 1000,
+				T: number * 1000 * 1000 * 1000 * 1000,
+			}
+			
+			return multipliers[multiplier] || NaN
 		} else {
 			return +string
 		}

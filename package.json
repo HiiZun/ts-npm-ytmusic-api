@@ -24,11 +24,12 @@
 		}
 	},
 	"scripts": {
-		"build": "tsc",
+		"build": "tsc -p tsconfig.build.json",
 		"build:tsup": "tsup src/index.ts",
 		"lint": "npm run lint:ts && npm run lint:eslint && npm run format",
-		"lint:ci": "npm run lint:ts && (npm run lint:eslint || true) && npm run format",
+		"lint:ci": "npm run lint:ts:ci && (npm run lint:eslint || true) && npm run format",
 		"lint:ts": "tsc --noEmit",
+		"lint:ts:ci": "tsc --noEmit -p tsconfig.build.json",
 		"lint:eslint": "eslint src --ext .ts --fix",
 		"lint:check": "npm run lint:ts && eslint src --ext .ts && prettier --check \"src/**/*.ts\"",
 		"format": "prettier --write \"src/**/*.ts\"",
@@ -66,5 +67,8 @@
 		"http-proxy",
 		"socks-proxy",
 		"scraper"
-	]
+	],
+	"engines": {
+		"node": ">=16.0.0"
+	}
 }

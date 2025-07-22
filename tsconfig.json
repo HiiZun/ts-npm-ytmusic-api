@@ -1,8 +1,8 @@
 {
 	"compilerOptions": {
 		/** Transpiler */
-		"target": "es2020",
-		"lib": ["es2020"],
+		"target": "es2022",
+		"lib": ["es2022"],
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"esModuleInterop": true,
@@ -15,21 +15,21 @@
 		"declaration": true,
 
 		/** Type Checking */
-		"strict": true,
-		"strictNullChecks": true,
+		"strict": false,
+		"strictNullChecks": false,
 		"strictFunctionTypes": true,
 		"strictBindCallApply": true,
-		"strictPropertyInitialization": true,
+		"strictPropertyInitialization": false,
 		"noImplicitThis": true,
-		"useUnknownInCatchVariables": true,
+		"useUnknownInCatchVariables": false,
 		"noImplicitReturns": true,
 		"noFallthroughCasesInSwitch": true,
-		"noUncheckedIndexedAccess": true,
+		"noUncheckedIndexedAccess": false,
 		"noImplicitOverride": true,
 		"allowUnusedLabels": true,
 		"resolveJsonModule": true,
 		"forceConsistentCasingInFileNames": true,
-		"exactOptionalPropertyTypes": true,
+		"exactOptionalPropertyTypes": false,
 
 		/** Other */
 		// "noEmit": false,
