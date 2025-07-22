@@ -5,6 +5,7 @@
 		"noImplicitAny": false,
 		"strictNullChecks": false,
 		"noUncheckedIndexedAccess": false,
-		"exactOptionalPropertyTypes": false
+		"exactOptionalPropertyTypes": false,
+		"noImplicitReturns": false
 	}
 }

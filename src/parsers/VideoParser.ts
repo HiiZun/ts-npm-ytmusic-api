@@ -66,7 +66,7 @@ export default class VideoParser {
 		const videoId2: string[] = traverseList(item, "thumbnails")[0].url.match(/https:\/\/i\.ytimg\.com\/vi\/(.+)\//,)
 
 		if (videoId1 == '' && videoId2 == null) {
-			return
+			return undefined
 		}
 
 		return checkType(

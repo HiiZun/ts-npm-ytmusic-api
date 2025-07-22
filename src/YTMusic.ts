@@ -175,7 +175,7 @@ export default class YTMusic {
 		if (cookies) {
 			for (const cookieString of cookies.split("; ")) {
 				const cookie = Cookie.parse(`${cookieString}`)
-				if (!cookie) return
+				if (!cookie) continue
 
 				this.cookiejar.setCookieSync(cookie, "https://www.youtube.com/")
 			}
