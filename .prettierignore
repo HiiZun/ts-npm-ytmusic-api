@@ -1,0 +1,10 @@
+dist/
+node_modules/
+*.js
+*.d.ts
+coverage/
+.github/
+package-lock.json
+*.config.js
+*.config.ts
+*.md

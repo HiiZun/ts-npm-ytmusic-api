@@ -1,0 +1,8 @@
+dist/
+node_modules/
+*.js
+*.d.ts
+coverage/
+.github/
+*.config.js
+*.config.ts

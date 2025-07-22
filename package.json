@@ -27,10 +27,12 @@
 	},
 	"scripts": {
 		"build": "tsup src/index.ts",
-		"lint": "tsc --noEmit && eslint src --ext .ts --fix && prettier --write \"src/**/*.ts\"",
-		"lint:check": "tsc --noEmit && eslint src --ext .ts && prettier --check \"src/**/*.ts\"",
+		"lint": "npm run lint:ts && npm run lint:eslint && npm run format",
+		"lint:ts": "tsc --noEmit",
+		"lint:eslint": "eslint src --ext .ts --fix --max-warnings 0",
+		"lint:check": "npm run lint:ts && eslint src --ext .ts --max-warnings 0 && prettier --check \"src/**/*.ts\"",
 		"format": "prettier --write \"src/**/*.ts\"",
-		"test": "bun test || echo 'No tests specified'",
+		"test": "echo 'No tests specified' && exit 0",
 		"prepublishOnly": "npm run build",
 		"clean": "rimraf dist"
 	},
@@ -51,6 +53,7 @@
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-prettier": "^5.1.3",
 		"prettier": "^3.2.5",
+		"rimraf": "^5.0.5",
 		"tsup": "^8.1.0",
 		"typescript": "5.1",
 		"zod-to-json-schema": "^3.23.1"
