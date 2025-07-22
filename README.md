@@ -36,7 +36,7 @@ First, create or edit your `.npmrc` file in your project root:
 Then install the package:
 
 ```bash
-npm install ytmusic-api
+npm install ytmusic-api-proxy
 ```
 
 ## Usage
@@ -44,7 +44,7 @@ npm install ytmusic-api
 ### Basic Usage
 
 ```js
-import YTMusic from "ytmusic-api"
+import YTMusic from "ytmusic-api-proxy"
 
 const ytmusic = new YTMusic()
 await ytmusic.initialize(/* Optional: Custom cookies */)
@@ -57,7 +57,7 @@ ytmusic.search("Never gonna give you up").then(songs => {
 ### Using with HTTP Proxy
 
 ```js
-import YTMusic from "ytmusic-api"
+import YTMusic from "ytmusic-api-proxy"
 
 // Option 1: Pass proxy config in constructor
 const ytmusic = new YTMusic({
