@@ -2,7 +2,7 @@
 
 ![License](https://img.shields.io/github/license/HiiZun/ts-npm-ytmusic-api?style=for-the-badge) ![Languages](https://img.shields.io/github/languages/count/HiiZun/ts-npm-ytmusic-api?style=for-the-badge) ![Top Language](https://img.shields.io/github/languages/top/HiiZun/ts-npm-ytmusic-api?style=for-the-badge) ![Commit Activity](https://img.shields.io/github/commit-activity/y/HiiZun/ts-npm-ytmusic-api?style=for-the-badge) ![Last commit](https://img.shields.io/github/last-commit/HiiZun/ts-npm-ytmusic-api?style=for-the-badge)
 
-YouTube Music API (Unofficial) is a YouTube Music data scraper. It comes with TypeScript support API for return types. The package is published to [GitHub Packages](https://github.com/HiiZun/ts-npm-ytmusic-api/packages).
+YouTube Music API (Unofficial) is a YouTube Music data scraper. It comes with TypeScript support API for return types. The package is published to [NPM](https://www.npmjs.com/package/ytmusic-api-proxy).
 
 ## Motivation
 
@@ -25,16 +25,6 @@ Because of this, I decided to build my own version of a youtube music api with T
 
 ## Installation
 
-### From GitHub Packages
-
-First, create or edit your `.npmrc` file in your project root:
-
-```
-@hiizun:registry=https://npm.pkg.github.com
-```
-
-Then install the package:
-
 ```bash
 npm install ytmusic-api-proxy
 ```
@@ -43,8 +33,21 @@ npm install ytmusic-api-proxy
 
 ### Basic Usage
 
+**ES Modules (import):**
 ```js
 import YTMusic from "ytmusic-api-proxy"
+
+const ytmusic = new YTMusic()
+await ytmusic.initialize(/* Optional: Custom cookies */)
+
+ytmusic.search("Never gonna give you up").then(songs => {
+	console.log(songs)
+})
+```
+
+**CommonJS (require):**
+```js
+const YTMusic = require("ytmusic-api-proxy").default
 
 const ytmusic = new YTMusic()
 await ytmusic.initialize(/* Optional: Custom cookies */)

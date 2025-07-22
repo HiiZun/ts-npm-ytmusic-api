@@ -3,6 +3,7 @@
 	"version": "5.3.0",
 	"description": "YouTube Music API",
 	"main": "./dist/index.js",
+	"module": "./dist/index.mjs",
 	"types": "./dist/index.d.ts",
 	"author": "zS1L3NT <dev@zectan.com> (http://www.zectan.com)",
 	"license": "GPL-3.0",
@@ -19,8 +20,9 @@
 	],
 	"exports": {
 		".": {
-			"require": "./dist/index.js",
-			"types": "./dist/index.d.ts"
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.js"
 		}
 	},
 	"scripts": {
