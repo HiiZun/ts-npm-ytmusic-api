@@ -35,6 +35,9 @@ jobs:
         npm cache clean --force
         rm -rf node_modules package-lock.json
         npm install --no-optional
+        # Force install platform-specific binaries for rollup
+        npm install @rollup/rollup-linux-x64-gnu --no-save --force || echo "Failed to install rollup binary, continuing..."
+        npm rebuild
         
     - name: Verify installation
       run: |
@@ -50,7 +53,10 @@ jobs:
     - name: Build project
       run: |
         echo "Building project..."
-        npm run build
+        npm run build:tsup || {
+          echo "tsup failed, falling back to tsc..."
+          npm run build
+        }
         echo "Verifying build output..."
         ls -la dist/ || echo "No dist directory found"
         
@@ -97,11 +103,17 @@ jobs:
         npm cache clean --force
         rm -rf node_modules package-lock.json
         npm install --no-optional
+        # Force install platform-specific binaries for rollup
+        npm install @rollup/rollup-linux-x64-gnu --no-save --force || echo "Failed to install rollup binary, continuing..."
+        npm rebuild
         
     - name: Build project
       run: |
         echo "Building for production..."
-        npm run build
+        npm run build:tsup || {
+          echo "tsup failed, falling back to tsc..."
+          npm run build
+        }
         echo "Build completed, checking output..."
         ls -la dist/
         
